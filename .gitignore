@@ -1,2 +1,8 @@
 .ipynb_checkpoints
 dataset
+CNN_test.model
+output
+*.jpg
+*.png
+*.jpeg
+*.JPG
