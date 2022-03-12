@@ -7,6 +7,7 @@
     , initial-scale=1.0">
     <title>MathSolve by matt.dmv</title>
     <link rel="stylesheet" href="tailwind.css">
+    <link rel="stylesheet" href="./dropzone.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"> 
@@ -49,15 +50,17 @@
             <div class="flex flex-wrap lg:ml-20 justify-center md:justify-start max-w-xl mt-0 md:my-36">
                 <h1 class="font-bold text-white text-5xl md:text-6xl lg:text-7xl text-center md:text-left bg-normal_text">Solve<br> your math<br> headaches.</h1>
                 <div class="w-full flex justify-center md:justify-start">
-                    <button class="px-8 py-4 bg-theme text-white font-bold mt-12 flex items-center space-x-3">
-                        <div>
-                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.4375 11C14.4375 11.9117 14.0753 12.786 13.4307 13.4307C12.786 14.0753 11.9117 14.4375 11 14.4375C10.0883 14.4375 9.21398 14.0753 8.56932 13.4307C7.92466 12.786 7.5625 11.9117 7.5625 11C7.5625 10.0883 7.92466 9.21398 8.56932 8.56932C9.21398 7.92466 10.0883 7.5625 11 7.5625C11.9117 7.5625 12.786 7.92466 13.4307 8.56932C14.0753 9.21398 14.4375 10.0883 14.4375 11Z" fill="white"/>
-                                <path d="M0 11C0 11 4.125 3.4375 11 3.4375C17.875 3.4375 22 11 22 11C22 11 17.875 18.5625 11 18.5625C4.125 18.5625 0 11 0 11ZM11 15.8125C12.2764 15.8125 13.5004 15.3055 14.403 14.403C15.3055 13.5004 15.8125 12.2764 15.8125 11C15.8125 9.72365 15.3055 8.49957 14.403 7.59705C13.5004 6.69453 12.2764 6.1875 11 6.1875C9.72365 6.1875 8.49957 6.69453 7.59705 7.59705C6.69453 8.49957 6.1875 9.72365 6.1875 11C6.1875 12.2764 6.69453 13.5004 7.59705 14.403C8.49957 15.3055 9.72365 15.8125 11 15.8125Z" fill="white"/>
-                            </svg>								
-                        </div>
-                        <span>Solve</span>
-                    </button>
+                    <a href="#solver">
+                        <button class="px-8 py-4 bg-theme text-white font-bold mt-12 flex items-center space-x-3">
+                            <div>
+                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.4375 11C14.4375 11.9117 14.0753 12.786 13.4307 13.4307C12.786 14.0753 11.9117 14.4375 11 14.4375C10.0883 14.4375 9.21398 14.0753 8.56932 13.4307C7.92466 12.786 7.5625 11.9117 7.5625 11C7.5625 10.0883 7.92466 9.21398 8.56932 8.56932C9.21398 7.92466 10.0883 7.5625 11 7.5625C11.9117 7.5625 12.786 7.92466 13.4307 8.56932C14.0753 9.21398 14.4375 10.0883 14.4375 11Z" fill="white"/>
+                                    <path d="M0 11C0 11 4.125 3.4375 11 3.4375C17.875 3.4375 22 11 22 11C22 11 17.875 18.5625 11 18.5625C4.125 18.5625 0 11 0 11ZM11 15.8125C12.2764 15.8125 13.5004 15.3055 14.403 14.403C15.3055 13.5004 15.8125 12.2764 15.8125 11C15.8125 9.72365 15.3055 8.49957 14.403 7.59705C13.5004 6.69453 12.2764 6.1875 11 6.1875C9.72365 6.1875 8.49957 6.69453 7.59705 7.59705C6.69453 8.49957 6.1875 9.72365 6.1875 11C6.1875 12.2764 6.69453 13.5004 7.59705 14.403C8.49957 15.3055 9.72365 15.8125 11 15.8125Z" fill="white"/>
+                                </svg>								
+                            </div>
+                            <span>Solve</span>
+                        </button>
+                    </a>
                 </div>
             </div>
             <img src="img/math.jpg" alt="Math" class="w-3/4 mt-12 md:absolute -mt-6 md:mt-0 right-0 -z-1">
@@ -72,24 +75,13 @@
 
 				<!-- Drag and drop a picture -->
 				<div class="container">
-                    <div class="w-full px-16 py-12 lg:px-32 lg:py-20 lg:space-x-32 justify-center lg:justify-center flex-wrap lg:flex-nowrap items-center">
-                        <div class="flex flex-col items-center border-2 px-6 py-12 border-dashed border-gray-400 rounded-md justify-between">
-                            <svg class="w-12 h-12 text-gray-500" aria-hidden="ture" fill="none" stroke="currentColor" viewBox="0 0 48 48">
-                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                            </svg>
-                            <p class="text-gray-700">Drop picture to upload</p>
-
-                            <p class="text-gray-700">or</p>
-
-                            <label class="bg-white px-4 h-9 inline-flex items-center rounded border border-theme shadow-sm text-sm font-medium text-theme focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                Select pictures
-                                <input type="file" name="file" multiple class="sr-only">
-                            </label>
-                        </div>
+                    <div class="w-full px-16 lg:px-32 lg:space-x-32 justify-center lg:justify-center flex-wrap lg:flex-nowrap items-center">
+                        <form action="/file-upload" class="dropzone px-32" id="my-awesome-dropzone">
+                        
+                        </form>
                     </div>
                     <div>
-                        <div class="mx-auto flex justify-center">
+                        <div class="mx-auto mb-8 flex justify-center">
                             <button id="submitBtn" type="button" class="px-8 py-4 bg-theme text-white font-bold mt-12 flex items-center space-x-3 justify-between">Solve equation</button>
                         </div>
                     </div>
@@ -99,11 +91,21 @@
 		</div>
 
 
-		<!-- About the project -->
+		<!-- Solution -->
+		<!-- <div class="container mt-8 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full" id="divSolution">
+			<section class="w-full">
+				<h2 id="solution" class="secondary-title text-normal_text">Solution</h2>
+				<p class="section-paragraph"></p>
+
+			</section>
+		</div> -->
+        
+        
+        <!-- About the project -->
 		<div class="container mt-64 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full">
 			<section class="w-full">
 				<h2 id="about" class="secondary-title text-normal_text">About the project</h2>
-				<p class="section-paragraph">MathSolve is an AI application which took inspiration from Photomath app. The goal of this demo project was to build a model that would recognize handwritten digits and symbols formulated in a mathematical equation from the picture. Then, the application should be able to solve equation from the picture and give a user the final result.</p>
+				<p class="section-paragraph">MathSolve is an AI based application which took inspiration from Photomath app. The goal of this demo project was to build a model that would recognize handwritten digits and symbols formulated in a mathematical equation from the picture. Then, the application should be able to solve equation from the picture and give a user the final result.</p>
 
 			</section>
 		</div>
@@ -155,6 +157,8 @@
 			</section>
 		</div>
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="./dropzone.min.js"></script>
         <script src="main.js"></script>
 </body>
 </html>
