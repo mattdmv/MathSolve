@@ -1,4 +1,3 @@
-import pickle
 import tensorflow as tf
 from tensorflow import keras
 import json
@@ -6,7 +5,8 @@ import cv2 as cv
 import numpy as np
 import pandas as pd
 import re
-import base64
+from PIL import Image
+from io import BytesIO
 
 __class_name_to_number = {}
 __class_number_to_name = {}
@@ -27,25 +27,12 @@ def load_saved_artifacts():
     global __model
 
     if __model is None:
-         __model = tf.keras.models.load_model('CNN.model')
+         __model = tf.keras.models.load_model('./artifacts/CNN.model')
     print("Loading saved artifacts...done")
-
-# convert base64 string to opencv image 
-def get_cv2_image_from_base64_string(b64str):
-    '''
-    credit: https://stackoverflow.com/questions/33754935/read-a-base-64-encoded-image-from-memory-using-opencv-python-library
-    :param uri:
-    :return:
-    '''
-    encoded_data = b64str.split(',')[1]
-    nparr = np.frombuffer(base64.b64decode(encoded_data), np.uint8)
-    img = cv.imdecode(nparr, cv.IMREAD_COLOR)
-
-    return img
 
 # find contours
 def find_contours(img):
-    
+
     imgray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     ret, thresh = cv.threshold(imgray, 100, 255, 0)
     return cv.findContours(
@@ -168,9 +155,7 @@ def solve_equation(equation_as_list):
     
     return result
 
-def equation_image_preprocess_pipeline(b64str):    
-    img = get_cv2_image_from_base64_string(b64str)
-    
+def equation_image_preprocess_pipeline(img):
     # find all conours in a given picture
     contours, hierarchy = find_contours(img)
     
@@ -199,6 +184,8 @@ def equation_image_preprocess_pipeline(b64str):
 
 # pipeline for prediction and calculation
 def predict_and_calc_pipeline(images_array):
+    load_saved_artifacts()
+    
     # make predictions
     predictions = __model.predict(images_array)
     
@@ -219,9 +206,9 @@ def predict_and_calc_pipeline(images_array):
 
 def main_pipeline(img):
     imgs_array = equation_image_preprocess_pipeline(img)
+    solution = predict_and_calc_pipeline(imgs_array)
     
-    return predict_and_calc_pipeline(imgs_array)
-
+    return solution
 
 if __name__ == '__main__':
     load_saved_artifacts()

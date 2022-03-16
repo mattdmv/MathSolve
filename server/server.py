@@ -1,23 +1,22 @@
 # libraries imports
 from fastapi import FastAPI, UploadFile, File
+import cv2 as cv
 import uvicorn
-import pickle
 import utility
+import numpy as np
 
 # create the app object
 app = FastAPI()
 
-# load the model
-#pickle_in = open ('/artifacts/model.pickle', 'rb')
-#model = pickle.load(pickle_in)
-
 @app.post('/solve')
 async def solve_equation(file: UploadFile = File(...)):
-    image_data = file
+    content = await file.read()
+    nparr = np.fromstring(content, np.uint8)
+    img = cv.imdecode(nparr, cv.IMREAD_COLOR)
 
-    response = utility.main_pipeline(image_data)
+    response = utility.main_pipeline(img)
 
-    return {'solution': response}
+    return {'Solution': response}
 
 if __name__=="__main__":
     print("Starting FastAPI Server!")
