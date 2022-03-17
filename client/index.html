@@ -82,23 +82,30 @@
                     </div>
                     <div>
                         <div class="mx-auto mb-8 flex justify-center">
-                            <button id="submitBtn" type="button" class="px-8 py-4 bg-theme text-white font-bold mt-12 flex items-center space-x-3 justify-between">Solve equation</button>
+                            <button id="solveBtn" type="button" class="px-8 py-4 bg-theme text-white font-bold mt-12 flex items-center space-x-3 justify-between">Solve equation</button>
                         </div>
                     </div>
                 </div>
 
+                <!-- Solution -->
+                <div class="container mt-16 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full" id="divSolution">
+                    <section class="w-full">
+                        <h3 id="solution" class="secondary-title text-normal_text">Solution</h3>
+                        <p id="solutionHolder"></p>
+                    </section>
+                </div>
+
+                <!-- Error -->
+                <div class="container mt-16 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full" id="divSolution">
+                    <section class="w-full"  id="error">
+                        <h3 class="secondary-title text-normal_text">Error</h3>
+                        <p class="section-paragraph">Can't calculate the result. The model was not able to correctly detect digits.</p>
+
+                    </section>
+                </div>
+
 			</section>
 		</div>
-
-
-		<!-- Solution -->
-		<!-- <div class="container mt-8 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full" id="divSolution">
-			<section class="w-full">
-				<h2 id="solution" class="secondary-title text-normal_text">Solution</h2>
-				<p class="section-paragraph"></p>
-
-			</section>
-		</div> -->
         
         
         <!-- About the project -->
