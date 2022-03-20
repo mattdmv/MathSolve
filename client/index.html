@@ -76,30 +76,28 @@
 				<!-- Drag and drop a picture -->
 				<div class="container">
                     <div class="w-full px-16 lg:px-32 lg:space-x-32 justify-center lg:justify-center flex-wrap lg:flex-nowrap items-center">
-                        <form action="/file-upload" class="dropzone px-32" id="my-awesome-dropzone">
-                        
+                        <form action="/file-upload" class="dropzone px-32" id="my-awesome-dropzone" method="post">
                         </form>
                     </div>
-                    <div>
-                        <div class="mx-auto mb-8 flex justify-center">
-                            <button id="solveBtn" type="button" class="px-8 py-4 bg-theme text-white font-bold mt-12 flex items-center space-x-3 justify-between">Solve equation</button>
-                        </div>
+                    <div class="mx-auto mb-8 flex justify-center">
+                        <button id="solveBtn" type="button" class="px-8 py-4 bg-theme text-white font-bold mt-12 flex items-center space-x-3 justify-between">Solve equation</button>
                     </div>
                 </div>
 
                 <!-- Solution -->
                 <div class="container mt-16 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full" id="divSolution">
                     <section class="w-full">
-                        <h3 id="solution" class="secondary-title text-normal_text">Solution</h3>
-                        <p id="solutionHolder"></p>
+                        <h3 id="solution" class="secondary-title text-normal_text">Solution
+                            <p id="solutionHolder" class="text-normal_text text-center"></p>
+                        </h3>
                     </section>
                 </div>
 
                 <!-- Error -->
-                <div class="container mt-16 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full" id="divSolution">
-                    <section class="w-full"  id="error">
-                        <h3 class="secondary-title text-normal_text">Error</h3>
-                        <p class="section-paragraph">Can't calculate the result. The model was not able to correctly detect digits.</p>
+                <div class="container mt-16 flex justify-between items-center mx-auto px-8 md:px-14 lg:px-24 w-full" id="divError">
+                    <section class="w-full">
+                        <h3 id="error" class="secondary-title">Error</h3>
+                        <p id="errorMsg" class="section-paragraph">Can't calculate the result. The model was not able to correctly detect digits.</p>
 
                     </section>
                 </div>

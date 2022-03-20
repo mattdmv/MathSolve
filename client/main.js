@@ -1,6 +1,7 @@
 Dropzone.autoDiscover = false;
 
 function init() {
+
     let dz = new Dropzone("#my-awesome-dropzone", {
         url: "/",
         maxFiles: 1,
@@ -10,30 +11,36 @@ function init() {
     });
     
     dz.on("addedfile", function() {
+		$('#errorMsg').hide();
+		$('#solution').hide();
+		$('#solutionHolder').hide();
+		
         if (dz.files[1]!=null) {
             dz.removeFile(dz.files[0]);        
         }
     });
 
-	dz.on("complete", function (file) {
-        let imageData = file.dataURL;
+	dz.on("complete", function(file) {
+        
+		let imageData = file.dataURL;
 
-		var url = "http://127.0.0.1:8000/solve"
+		var solution = document.getElementById("solutionHolder");
 
-		$.post(url, {
-			image_data: imageData
-		}, function(data, status) {
-			console.log(data.Solution);
+		var url = "http://127.0.0.1:5000/solve"
 
-			if(!data || data.length==0) {
-				$('#error').show();
-			} else {
-				var solution = document.getElementById("solutionHolder");
+		$.post(url, {image_data: imageData}, function(data, status) {
+			
+			console.log(data);
 
-				solution.innerHTML = "<p>" + data.Solution.toString() + "</p>";
+			if (!data || data.length==0 || data.solution==null) {
+				$('#errorMsg').show();
+            } else {
+				solution.innerHTML = data.solution.toString()
 				$('#solution').show();
 				$('#solutionHolder').show();
 			}
+
+			console.log(status);
 
 		})
 	});
@@ -41,7 +48,6 @@ function init() {
 	$("#solveBtn").on('click', function (e) {
         dz.processQueue();		
     });
-
 }
 
 
@@ -62,6 +68,7 @@ $(document).ready(function() {
 	$('#solution').hide();
 	$('#solutionHolder').hide();
 	$('#error').hide();
+	$('#errorMsg').hide();
 
 	updateList();
 
