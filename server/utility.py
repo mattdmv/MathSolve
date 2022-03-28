@@ -3,10 +3,8 @@ from tensorflow import keras
 import json
 import cv2 as cv
 import numpy as np
-import pandas as pd
 import re
-from PIL import Image
-from io import BytesIO
+
 
 __class_name_to_number = {}
 __class_number_to_name = {}
