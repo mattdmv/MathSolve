@@ -994,6 +994,53 @@ html,body {
   }
 }
 
+@media (max-width: 768px) {
+  .cancel {
+    display:block;
+  }
+  .mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    min-height: 100vh;
+    display: block;
+    z-index: 98;
+    background-color: #3F3FFF;
+    padding-top: 120px;
+    transition: 0.4s;
+  }
+  
+  .mobile-nav.is-active {
+    left: 40%;
+  }
+  
+  .cancel {
+    display: block;
+    margin: 0 auto 16px;
+    text-align: center;
+    padding: 12px 16px;
+  
+    color: #FFF;
+  }
+
+  .mobile-nav a {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    /*margin: 0 auto 16px;*/
+    text-align: center;
+    padding: 12px 16px;
+  
+    color: #FFF;
+    text-decoration: none;
+  }
+  
+  .mobile-nav a:hover {
+    font-weight: bold;
+  }
+}
+
 @media (min-width: 1024px) {
   .lg\:mr-24 {
     margin-right: 6rem;
