@@ -89,8 +89,5 @@ $(document).ready(function() {
 	cancel_btn.addEventListener('click', function () {
 		mobile_menu.classList.toggle('is-active');
 	});
-	mobile_nav_links.addEventListener('click', function () {
-		mobile_menu.classList.toggle('is-active');
-	});
 
 })
