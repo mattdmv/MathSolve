@@ -133,19 +133,21 @@
 
 				<div class="w-full grid lg:grid-cols-2 gap-8 lg:gap-32 mt-24">
 					<div class="space-y-12">
-						<div>
-							<label class="text-secondary block mb-6 text-xl font-bold">Name</label>
-							<input class="w-full border border-input-border bg-input px-4 py-4">
-						</div>
-						<div>
-							<label class="text-secondary block mb-6 text-xl font-bold">Email</label>
-							<input type="email" class="w-full border border-input-border bg-input px-4 py-4">
-						</div>
-						<div>
-							<label class="text-secondary block mb-6 text-xl font-bold">Message</label>
-							<textarea type="email" class="w-full border border-input-border bg-input px-4 py-4 h-56 resize-none"></textarea>
-						</div>
-						<button class="px-6 py-2 bg-theme text-white font-bold">Send it!</button>
+                        <form action="https://formsubmit.co/yeerahdi.ai@gmail.com" method="POST">
+                            <div>
+                                <label class="text-secondary block mb-6 text-xl font-bold">Name</label>
+                                <input name="Name" type="text" placeholder="Full Name" class="w-full border border-input-border bg-input px-4 py-4" required>
+                            </div>
+                            <div>
+                                <label class="text-secondary block mb-6 text-xl font-bold">Email</label>
+                                <input name="Email" type="email" placeholder="Email address" class="w-full border border-input-border bg-input px-4 py-4" required>
+                            </div>
+                            <div>
+                                <label class="text-secondary block mb-6 text-xl font-bold">Message</label>
+                                <textarea name="Message" placeholder="Your message" class="w-full border border-input-border bg-input px-4 py-4 h-56 resize-none" required></textarea>
+                            </div>
+                            <button type="submit" class="px-6 py-2 bg-theme text-white font-bold">Send it!</button>
+                        </form>
 					</div>
 
 					<div class="mt-12">
