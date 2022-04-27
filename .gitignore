@@ -2,9 +2,10 @@
 dataset
 CNN_test.model
 output
-*.jpg
+#*.jpg
 *.png
 *.jpeg
-*.JPG
+#*.JPG
 fastapi_server.py
 __pycache__
+Handwritten equation processing
