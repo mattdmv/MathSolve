@@ -72,6 +72,34 @@ def remove_overlapping_bounding_boxes(boundingRects):
 
     return [bounding for bounding in boundingRects if bounding is not None]
 
+# check for exponents
+def check_exponents(bounding_boxes):
+    """Checks difference between vertical coordinate y among two bounding boxes.
+    Args:
+        bounding_boxes (list): bounding box to be used for comparison
+    Returns:
+        mask (list): List of True or False values if condition for exponent is satisfied."""
+    
+    main_anchor = bounding_boxes[0][1] + bounding_boxes[0][3]
+    remaining_anchors = [bounding_box[1]+bounding_box[3] for bounding_box in bounding_boxes[1:]]
+    
+    mask = []
+    
+    is_exponent = None
+    delta_y = None
+    
+    for anchor in remaining_anchors:
+        delta_y = main_anchor - anchor
+        
+        if delta_y > 100:
+            is_exponent = True
+        else:
+            is_exponent = False
+        
+        mask.append(is_exponent)
+        
+    return mask
+
 # crops images given their bounding boxes
 def crop_bounding_box(image, bounding_boxes):
 
@@ -109,49 +137,34 @@ def get_classes(labels, my_dict):
 
     return keys_list
 
-# preprocess predicted labels and prepare for calculating
-def preprocess_equation(digits_and_symbols):
-    
-    if len(digits_and_symbols) <= 3:
+# process equation and calculate solution
+def process_n_calc(digits_and_symbols, exponents_mask):
+    result = None
+
+    if len(digits_and_symbols) == 1:
+        print(digits_and_symbols[0])
         return digits_and_symbols
+
+    elif len(digits_and_symbols) <= 2 and exponents_mask[0] != True:
+        join = ''.join(digits_and_symbols)
+        print(join)
+        return join
+    elif len(digits_and_symbols) <= 2 and exponents_mask[0] == True:
+        print('{}^{}'.format(digits_and_symbols[0], digits_and_symbols[1]))
+        return int(digits_and_symbols[0])**int(digits_and_symbols[1])
     else:
+        for item in exponents_mask:
+            i = exponents_mask.index(item)
+            if item == True:
+                digits_and_symbols.insert(i+1, '**')
+
         # join all elements of list into one string
         join = ''.join(digits_and_symbols)
-        
-        # separate previously joined string with separators according to regex [^.0-9] (matches all characters except 
-        # decimal point and numbers)
-        equation_as_list = re.split('([^.0-9])', join)
-        
-        return equation_as_list
+        print(join)
 
-# mathematical operations
-def solve_equation(equation_as_list):
-    
-    result = None
-    
-    if len(equation_as_list) == 1:
-        result = float(equation_as_list[0])
-        
-    if len(equation_as_list) == 2:
-        result = float(equation_as_list[0])**float(equation_as_list[1])
-    
-    # check if equation has 3 members (in that case middle members always has to be operator) 
-    # if this is true, simply do the operation
-    if len(equation_as_list) == 3:
-        # check if this equation is multiplication
-        if equation_as_list[1] == '*':
-            result = float(equation_as_list[0]) * float(equation_as_list[2])
-        # check if this equation is division
-        if equation_as_list[1] == '/':
-            result = float(equation_as_list[0]) / float(equation_as_list[2])
-        # check if this equation is addition
-        if equation_as_list[1] == '+':
-            result = float(equation_as_list[0]) + float(equation_as_list[2])
-        # check if this equation is subtraction
-        if equation_as_list[1] == '-':
-            result = float(equation_as_list[0]) - float(equation_as_list[2])
-    
-    return result
+        result = eval(join)
+
+    return result 
 
 def equation_image_preprocess_pipeline(img):
     # find all conours in a given picture
@@ -168,6 +181,9 @@ def equation_image_preprocess_pipeline(img):
     
     # remove overlapping bounding boxes
     boundingBoxes_filtered = remove_overlapping_bounding_boxes(boundingBoxes)
+
+    # filter digits recognized as exponents
+    exponents_mask = check_exponents(boundingBoxes_filtered)
     
     # crop images given their bounding boxes
     cropped_imgs = crop_bounding_box(img, boundingBoxes_filtered)
@@ -178,10 +194,10 @@ def equation_image_preprocess_pipeline(img):
     # create an numpy array of resized images
     resized_imgs_array = np.array(resized_imgs)
 
-    return resized_imgs_array
+    return resized_imgs_array, exponents_mask
 
 # pipeline for prediction and calculation
-def predict_and_calc_pipeline(images_array):
+def predict_and_calc_pipeline(images_array, exponents_mask):
     load_saved_artifacts()
     
     # make predictions
@@ -194,17 +210,14 @@ def predict_and_calc_pipeline(images_array):
     digits_and_symbols = get_classes(predicted_labels, __class_name_to_number)
     
     # preprocessing of a list of single digits and mathematical symbols
-    equation_as_list = preprocess_equation(digits_and_symbols)
-    
-    # get solution of a mathematical equation from image
-    solution = solve_equation(equation_as_list)
+    solution = process_n_calc(digits_and_symbols, exponents_mask)
     
     return solution
 
 
 def main_pipeline(img):
-    imgs_array = equation_image_preprocess_pipeline(img)
-    solution = predict_and_calc_pipeline(imgs_array)
+    imgs_array, exponents = equation_image_preprocess_pipeline(img)
+    solution = predict_and_calc_pipeline(imgs_array, exponents)
     
     return solution
 

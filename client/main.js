@@ -26,9 +26,9 @@ function init() {
 
 		var solution = document.getElementById("solutionHolder");
 
-		// var url = "http://127.0.0.1:5000/solve"; If we are not using ngnix
+		var url = "http://127.0.0.1:5000/solve"; //If we are not using ngnix
 
-		var url = "/api/solve"; // if we are using ngnix
+		// var url = "/api/solve"; // if we are using ngnix
 
 		$.post(url, {image_data: imageData}, function(data, status) {
 			
