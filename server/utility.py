@@ -91,12 +91,15 @@ def check_exponents(bounding_boxes):
     for anchor in remaining_anchors:
         delta_y = main_anchor - anchor
         
-        if delta_y > 100:
+        if delta_y >= 90:
             is_exponent = True
         else:
             is_exponent = False
         
         mask.append(is_exponent)
+
+    # check
+    print(mask)
         
     return mask
 
@@ -134,6 +137,9 @@ def get_classes(labels, my_dict):
         for key, value in my_dict.items():
              if label == value:
                     keys_list.append(key)
+    
+    # check
+    print(keys_list)
 
     return keys_list
 
@@ -153,10 +159,11 @@ def process_n_calc(digits_and_symbols, exponents_mask):
         print('{}^{}'.format(digits_and_symbols[0], digits_and_symbols[1]))
         return int(digits_and_symbols[0])**int(digits_and_symbols[1])
     else:
-        for item in exponents_mask:
-            i = exponents_mask.index(item)
-            if item == True:
-                digits_and_symbols.insert(i+1, '**')
+        already_inserted = 0
+        for i in range(len(exponents_mask)):
+            if exponents_mask[i] == True:
+                digits_and_symbols.insert(i+1+already_inserted, '**')
+                already_inserted += 1
 
         # join all elements of list into one string
         join = ''.join(digits_and_symbols)
